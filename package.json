@@ -1,0 +1,12 @@
+{
+  "name": "mern-class",
+  "version": "1.0.0",
+  "description": "Ecommerce API",
+  "license": "ISC",
+  "author": "TechNabu",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
