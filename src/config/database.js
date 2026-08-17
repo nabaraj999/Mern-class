@@ -1,8 +1,9 @@
 import mongoose from "mongoose";
+import config from "./config.js";
 
 async function connectDB() {
     try {
-   await mongoose.connect("mongodb://localhost:27017/mern-class")
+   await mongoose.connect(config.mongoUri)
     } catch (error) {
         console.error("MongoDB connection error:", error);
         process.exit(1);

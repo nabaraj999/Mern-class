@@ -1,21 +1,30 @@
 import express from "express";
+import fs from "fs/promises";
 
 import config from "./config/config.js";
-import UserRoute from "./routes/user.routes.js";
+import usersRoute from "./routes/user.routes.js";
+import productsRoute from "./routes/product.routes.js";
 import connectDB from "./config/database.js";
 
 const app = express();
+
 connectDB();
 
-app.use(express.json());
-
-app.get("/", (req, res) => {
-    res.send("Hello World");
+app.get("/", (request, response) => {
+  response.send("Home page");
 });
 
 app.get("/about", (req, res) => {
-    res.send("About page");
+  res.send("<h1>About page</h1>");
 });
 
-app.use("/api/users", UserRoute);
+app.get("/contact", (req, res) => {
+  res.send("<h1>Welcome to Contact page</h1>");
+});
 
+app.use("/api/users", usersRoute);
+app.use("/api/products", productsRoute);
+
+app.listen(config.port, () => {
+  console.log(`Server running at port ${config.port}...`);
+});
