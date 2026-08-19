@@ -1,8 +1,11 @@
- import dotenv from "dotenv";   
- dotenv.config();
- 
+import dotenv from "dotenv";
+
+dotenv.config();
+
 const config = {
-  port: process.env.PORT || 5000,
-  mongoUri: process.env.MONGO_URI || "mongodb://localhost:27017/mern-class",
+  port: process.env.PORT || 9000,
+  mongodbUrl: process.env.MONGODB_URL || "",
+  jwtSecret: process.env.JWT_SECRET || "",
 };
+
 export default config;

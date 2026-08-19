@@ -1,23 +1,22 @@
-import authServices from "../services/auth.services.js";
+import express from "express";
+import authControllers from "../controllers/auth.controllers.js";
 
-const login = async (req, res) => {
-  try {
-    const data = await authServices.login(req.body);
+const router = express.Router();
 
-    res.json(data);
-  } catch (error) {
-    res.status(400).json({ message: error.message });
-  }
-};
+/**
+ * Login
+ * URL: /api/auth/login
+ * HTTP Method: POST
+ */
 
-const register = async (req, res) => {
-  try {
-    const data = await authServices.register(req.body);
+router.post("/login", authControllers.login);
 
-    res.json(data);
-  } catch (error) {
-    res.status(400).json({ message: error.message });
-  }
-};
+/**
+ * Register
+ * URL: /api/auth/register
+ * HTTP Method: POST
+ */
 
-export default { login, register };
+router.post("/register", authControllers.register);
+
+export default router;
