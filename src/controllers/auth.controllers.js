@@ -1,22 +1,43 @@
-import express from "express";
-import authControllers from "../controllers/auth.controllers.js";
+import authServices from "../services/auth.services.js";
+import jwt from "../utils/jwt.js";
 
-const router = express.Router();
+const login = async (req, res) => {
+  try {
+    const data = await authServices.login(req.body);
 
-/**
- * Login
- * URL: /api/auth/login
- * HTTP Method: POST
- */
+    const token = jwt.generateToken(data);
 
-router.post("/login", authControllers.login);
+    res.cookie("authToken", token, {
+      maxAge: 86400 * 1000, // 1 day in milliseconds
+    });
 
-/**
- * Register
- * URL: /api/auth/register
- * HTTP Method: POST
- */
+    res.json(data);
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({ message: error.message });
+  }
+};
 
-router.post("/register", authControllers.register);
+const register = async (req, res) => {
+  try {
+    const data = await authServices.register(req.body);
 
-export default router;
+    const token = jwt.generateToken(data);
+
+    res.cookie("authToken", token, {
+      maxAge: 86400 * 1000, // 1 day in milliseconds
+    });
+
+    res.json(data);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};
+
+const logout = (req, res) => {
+  res.clearCookie("authToken");
+
+  res.json({ message: "Logout succcessful" });
+};
+
+export default { login, register, logout };
