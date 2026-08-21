@@ -216,9 +216,45 @@ snake_case
 - Storage: Browser
 - Expiry: Never (Permanent)
 
+## Middleware
+
+- Function (controller) that lies between request and response
+- Function that has access of both request and response object, and can modify them
+- It has additional functionality to go to the next() call
+
+Browser ------> Request --------> Server
+Middleware Middleware Middleware
+Server -------> Response -------> Browser
+
+### Usage
+
+- Logging (Log report)
+- Authentication & Authorization
+- Request & Response object modification
+- Error handling
+- Data validation
+
+## HTTP Status Codes
+
+1. 2xx (Success)
+- 200 OK
+- 201 Create
+
+2. 3xx (Redirection)
+
+3. 4xx (Client Error)
+- 400 Bad request
+- 401 Unauthorized
+- 403 Forbidden
+- 404 Not found
+- 409 Conflict
+- 422 Unproccessable Entity
+
+4. 5xx (Server Error)
+- 500 Internal server error
+- 504 Timeout
+
 =======================================
 
-- HTTP status codes
-- Middleware
 - Postman
 - data validation with zod
