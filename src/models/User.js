@@ -1,4 +1,11 @@
 import mongoose from "mongoose";
+import { emailRegex } from "../constants/regex.js";
+import {
+  ROLE_ADMIN,
+  ROLE_CUSTOMER,
+  ROLE_MERCHANT,
+  ROLE_SUPER_ADMIN,
+} from "../constants/roles.js";
 
 const userSchema = new mongoose.Schema({
   name: {
@@ -12,12 +19,10 @@ const userSchema = new mongoose.Schema({
     required: [true, "Email address is required."],
     minLength: 5,
     maxLength: 100,
-    unique: true,
+    unique: [true, "Email already exists."],
     lowercase: true,
     validate: {
       validator: (value) => {
-        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-
         return emailRegex.test(value);
       },
       message: "Invalid email address.",
@@ -25,21 +30,19 @@ const userSchema = new mongoose.Schema({
   },
   password: {
     type: String,
-    minLength: 6,
-    maxLength: 50,
     required: [true, "Password is required."],
   },
   roles: {
     type: [String],
-    default: ["CUSTOMER"],
-    enum: ["CUSTOMER", "MERCHANT", "ADMIN", "SUPER_ADMIN"],
+    default: [ROLE_CUSTOMER],
+    enum: [ROLE_CUSTOMER, ROLE_ADMIN, ROLE_MERCHANT, ROLE_SUPER_ADMIN],
   },
   phone: {
     type: String,
     required: [true, "Phone number is required."],
     maxLength: 15,
     minLength: 6,
-    unique: true,
+    unique: [true, "Phone number already exists."],
   },
   createdAt: {
     type: Date,
@@ -58,6 +61,10 @@ const userSchema = new mongoose.Schema({
       type: String,
       default: "Nepal",
     },
+  },
+  isActive: {
+    type: Boolean,
+    default: true,
   },
 });
 
